@@ -8,17 +8,20 @@ import styled from "styled-components";
 const ListWrap = styled.div`
   display: flex;
   gap: 10px;
-  padding-top: 5%;
+  padding: 5% 0;
   justify-content: space-around;
   align-items: center;
 `;
 const List = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
   h3 {
   }
   ul {
     display: flex;
-    background-color: red;
-    
   }
 `;
 

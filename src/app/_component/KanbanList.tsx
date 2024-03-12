@@ -1,10 +1,9 @@
 "use client";
 import React from "react";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+
 import Card from "./Card";
 import styled from "styled-components";
-
+import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 const ListWrap = styled.div`
   display: flex;
   gap: 10px;
@@ -28,13 +27,13 @@ const List = styled.div`
 const titleList = ["진행전", "진행중", "완료"];
 export const KanbanListWrap = () => {
   return (
-    <DndProvider backend={HTML5Backend}>
+    <>
       <ListWrap>
         {titleList.map((item, idx) => (
           <KanbanList key={idx} title={item} />
         ))}
       </ListWrap>
-    </DndProvider>
+    </>
   );
 };
 

@@ -85,6 +85,11 @@ const List = styled.div`
   h3 {
   }
   ul {
+    min-width: 200px;
+    background-color: red;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
     display: flex;
     flex-direction: column;
   }

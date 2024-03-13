@@ -7,5 +7,5 @@ export interface TodoItem {
 }
 
 export type TodoList = {
-  [key in TodoStatus]?: TodoItem[];
+  [key in TodoStatus]: TodoItem[];
 };

@@ -11,6 +11,7 @@ const Wrap = () => {
       status: "todo",
     })),
     doing: [],
+    done: [],
   });
   return <KanbanList item={kanban} setKanban={setKanban}></KanbanList>;
 };

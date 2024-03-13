@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-
 import Card from "./Card";
 import styled from "styled-components";
 import {
@@ -9,13 +8,14 @@ import {
   Droppable,
   DropResult,
 } from "react-beautiful-dnd";
+import { TodoList, TodoStatus } from "@/types/types";
 
-export const KanbanListWrap = () => {
+interface Prop {
+  item: TodoList;
+  setKanban: React.Dispatch<React.SetStateAction<TodoList>>;
+}
+export const KanbanList = ({ item, setKanban }: Prop) => {
   const [enabled, setEnabled] = useState(false);
-  const items = [...Array(4)].map((_, i) => ({
-    id: `${i}${i}${i}`,
-    content: `item-${i}`,
-  }));
 
   // --- Draggable이 Droppable로 드래그 되었을 때 실행되는 이벤트
   const onDragEnd = ({ source, destination }: DropResult) => {
@@ -24,7 +24,6 @@ export const KanbanListWrap = () => {
   };
   useEffect(() => {
     const animation = requestAnimationFrame(() => setEnabled(true));
-
     return () => {
       cancelAnimationFrame(animation);
       setEnabled(false);
@@ -35,36 +34,39 @@ export const KanbanListWrap = () => {
   }
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="droppable">
-        {(provided) => (
-          <div ref={provided.innerRef} {...provided.droppableProps}>
-            {items.map((item, index) => (
-              <Draggable key={item.id} draggableId={item.id} index={index}>
-                {(provided) => (
-                  <div
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                  >
-                    {item.content}
-                  </div>
-                )}
-              </Draggable>
-            ))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
+      <ListWrap>
+        {Object.keys(item).map((todoStatus) => (
+          <Droppable key={todoStatus} droppableId={todoStatus}>
+            {(provided) => (
+              <List ref={provided.innerRef} {...provided.droppableProps}>
+                <h3>{todoStatus}</h3>
+                <ul>
+                  {item[todoStatus as TodoStatus].map((item, index) => (
+                    <Draggable
+                      key={item.id}
+                      draggableId={item.id}
+                      index={index}
+                    >
+                      {(provided) => (
+                        <div
+                          className="text-center shadow-md w-36 card bg-base-200"
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                        >
+                          <div className="card-body">{item.title}</div>
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                </ul>
+                {provided.placeholder}
+              </List>
+            )}
+          </Droppable>
+        ))}
+      </ListWrap>
     </DragDropContext>
-  );
-};
-
-const KanbanList = ({ title }: { title: string }) => {
-  return (
-    <List>
-      <h3 className="text-2xl">{title}</h3>
-      <ul></ul>
-    </List>
   );
 };
 const ListWrap = styled.div`
@@ -72,7 +74,7 @@ const ListWrap = styled.div`
   gap: 10px;
   padding: 5% 0;
   justify-content: space-around;
-  align-items: center;
+  align-items: baseline;
 `;
 const List = styled.div`
   display: flex;
@@ -84,5 +86,6 @@ const List = styled.div`
   }
   ul {
     display: flex;
+    flex-direction: column;
   }
 `;

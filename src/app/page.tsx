@@ -1,11 +1,10 @@
-// import ApexChart from "react-apexcharts";
+import Wrap from "./_component/Wrap";
 
-import { KanbanListWrap } from "./_component/KanbanList";
 
 export default function Home() {
   return (
     <>
-      <KanbanListWrap />
+      <Wrap />
     </>
   );
 }

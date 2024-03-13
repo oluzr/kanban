@@ -1,11 +1,11 @@
 "use client";
+import { TodoItem } from "@/types/types";
 import React from "react";
-import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
-const Card = () => {
 
+const Card = ({ item }: { item: TodoItem }) => {
   return (
-    <div  className="text-center shadow-md w-36 card bg-base-200">
-      <div className="card-body">아이템</div>
+    <div className="text-center shadow-md w-36 card bg-base-200">
+      <div className="card-body">{item.title}</div>
     </div>
   );
 };

@@ -9,6 +9,7 @@ import {
   DropResult,
 } from "react-beautiful-dnd";
 import { TodoList, TodoStatus } from "@/types/types";
+import AddCard from "./AddCard";
 
 interface Prop {
   item: TodoList;
@@ -17,10 +18,14 @@ interface Prop {
 export const KanbanList = ({ item, setKanban }: Prop) => {
   const [enabled, setEnabled] = useState(false);
 
-  // --- Draggable이 Droppable로 드래그 되었을 때 실행되는 이벤트
   const onDragEnd = ({ source, destination }: DropResult) => {
-    console.log(">>> source", source);
-    console.log(">>> destination", destination);
+    if (!destination) return;
+    const scourceKey = source.droppableId as TodoStatus;
+    const destinationKey = destination.droppableId as TodoStatus;
+    const newItems = JSON.parse(JSON.stringify(item)) as typeof item;
+    const [targetItem] = newItems[scourceKey].splice(source.index, 1); // splice 메서드는 원본배열 직접 변경
+    newItems[destinationKey].splice(destination.index, 0, targetItem);
+    setKanban(newItems);
   };
   useEffect(() => {
     const animation = requestAnimationFrame(() => setEnabled(true));
@@ -39,7 +44,7 @@ export const KanbanList = ({ item, setKanban }: Prop) => {
           <Droppable key={todoStatus} droppableId={todoStatus}>
             {(provided) => (
               <List ref={provided.innerRef} {...provided.droppableProps}>
-                <h3>{todoStatus}</h3>
+                <h3 className="text-xl">{todoStatus.toUpperCase()}</h3>
                 <ul>
                   {item[todoStatus as TodoStatus].map((item, index) => (
                     <Draggable
@@ -54,7 +59,7 @@ export const KanbanList = ({ item, setKanban }: Prop) => {
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                         >
-                          <div className="card-body">{item.title}</div>
+                          <Card item={item} />
                         </div>
                       )}
                     </Draggable>
@@ -74,6 +79,7 @@ const ListWrap = styled.div`
   gap: 10px;
   padding: 5% 0;
   justify-content: space-around;
+  background: oklch(var(--b2));
   align-items: baseline;
 `;
 const List = styled.div`
@@ -82,11 +88,9 @@ const List = styled.div`
   flex-direction: column;
   justify-content: center;
   gap: 20px;
-  h3 {
-  }
   ul {
     min-width: 200px;
-    background-color: red;
+    min-height: 200px;
     align-items: center;
     gap: 10px;
     padding: 10px 0;

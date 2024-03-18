@@ -1,10 +1,11 @@
 "use client";
 import { TodoList } from "@/types/types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { KanbanList } from "./KanbanList";
 import AddCard from "./AddCard";
 import styled from "styled-components";
 import Button from "./Button";
+import { setLocalStorage } from "@/lib/lib";
 
 const Wrap = () => {
   const [kanban, setKanban] = useState<TodoList>({
@@ -16,18 +17,18 @@ const Wrap = () => {
     doing: [],
     done: [],
   });
+  useEffect(() => {
+    const _kanban = localStorage.getItem("kanban");
+    if (!_kanban || _kanban === undefined) return;
+    setKanban(JSON.parse(_kanban));
+  }, []);
+  useEffect(() => {
+    setLocalStorage(kanban);
+  }, [kanban]);
   return (
     <Wrapper>
       <KanbanList item={kanban} setKanban={setKanban}></KanbanList>
-      <FormWrap>
-        <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-darker"
-          placeholder="Add Todo"
-        />
-        <Button type="submit" btnClass="secondary">
-          Add
-        </Button>
-      </FormWrap>
+      <AddCard setKanban={setKanban} />
     </Wrapper>
   );
 };
@@ -36,11 +37,4 @@ export default Wrap;
 
 const Wrapper = styled.div`
   height: 100%;
-`;
-const FormWrap = styled.form`
-  padding: 3% 5%;
-  background: oklch(var(--b2));
-  display: flex;
-  align-items: center;
-  gap: 10px;
 `;

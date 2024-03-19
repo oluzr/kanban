@@ -19,14 +19,17 @@ export const KanbanList = ({ item, setKanban }: Prop) => {
   const [enabled, setEnabled] = useState(false);
   const onDragEnd = ({ source, destination }: DropResult) => {
     if (!destination) return;
+    console.dir(destination);
     const scourceKey = source.droppableId as TodoStatus;
     const destinationKey = destination.droppableId as TodoStatus;
     const _items = JSON.parse(JSON.stringify(item)) as typeof item;
     const [targetItem] = _items[scourceKey].splice(source.index, 1); // splice 메서드는 원본배열 직접 변경
+    if (scourceKey !== destinationKey) targetItem.status = destinationKey;
     _items[destinationKey].splice(destination.index, 0, targetItem);
     setKanban(_items);
   };
   const deleteTodo = (item: TodoItem) => {
+    console.log(item);
     setKanban((prev) => {
       return {
         ...prev,
@@ -55,10 +58,10 @@ export const KanbanList = ({ item, setKanban }: Prop) => {
               <List ref={provided.innerRef} {...provided.droppableProps}>
                 <h3 className="text-xl">{todoStatus.toUpperCase()}</h3>
                 <ul>
-                  {item[todoStatus as TodoStatus].map((item, index) => (
+                  {item[todoStatus as TodoStatus].map((carditem, index) => (
                     <Draggable
-                      key={item.id}
-                      draggableId={item.id}
+                      key={carditem.id}
+                      draggableId={carditem.id}
                       index={index}
                     >
                       {(provided) => (
@@ -69,10 +72,10 @@ export const KanbanList = ({ item, setKanban }: Prop) => {
                           {...provided.dragHandleProps}
                           onClick={(e) => {
                             if ((e.target as HTMLElement).nodeName === "BUTTON")
-                              deleteTodo(item);
+                              deleteTodo(carditem);
                           }}
                         >
-                          <Card item={item} />
+                          <Card item={carditem} />
                           <button>x</button>
                         </CardItem>
                       )}
@@ -101,18 +104,21 @@ const List = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: center;
+  transition: all 0.1s;
   gap: 20px;
   ul {
     min-width: 200px;
     min-height: 200px;
     align-items: center;
     gap: 10px;
+    transition: all 0.1s;
     padding: 10px 0;
     display: flex;
     flex-direction: column;
   }
 `;
 const CardItem = styled.div`
+  transition: all 0.1s;
   position: relative;
   button {
     position: absolute;

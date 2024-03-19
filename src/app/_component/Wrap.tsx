@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { KanbanList } from "./KanbanList";
 import AddCard from "./AddCard";
 import styled from "styled-components";
-import Button from "./Button";
 import { setLocalStorage } from "@/lib/lib";
 
 const Wrap = () => {

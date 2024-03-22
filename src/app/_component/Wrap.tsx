@@ -8,11 +8,7 @@ import { setLocalStorage } from "@/lib/lib";
 
 const Wrap = () => {
   const [kanban, setKanban] = useState<TodoList>({
-    todo: [...Array(5)].map((_, i) => ({
-      id: `${i}${i}${i}`,
-      title: `Title ${i + 1}000`,
-      status: "todo",
-    })),
+    todo: [],
     doing: [],
     done: [],
   });

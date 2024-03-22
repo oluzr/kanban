@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Card from "./Card";
 import styled from "styled-components";
+import clsx from "clsx";
 import {
   DragDropContext,
   Draggable,
@@ -9,8 +10,7 @@ import {
   DropResult,
 } from "react-beautiful-dnd";
 import { TodoItem, TodoList, TodoStatus } from "@/types/types";
-import AddCard from "./AddCard";
-import { IoMdClose } from "react-icons/io";
+import { statusColor } from "@/lib/lib";
 interface Prop {
   item: TodoList;
   setKanban: React.Dispatch<React.SetStateAction<TodoList>>;
@@ -53,11 +53,24 @@ export const KanbanList = ({ item, setKanban }: Prop) => {
     <DragDropContext onDragEnd={onDragEnd}>
       <ListWrap>
         {Object.keys(item).map((todoStatus) => (
-          <Droppable key={todoStatus} droppableId={todoStatus}>
-            {(provided) => (
-              <List ref={provided.innerRef} {...provided.droppableProps}>
-                <h3 className="text-xl">{todoStatus.toUpperCase()}</h3>
-                <ul>
+          <Section key={todoStatus}>
+            <div className="flex flex-row justify-between items-center mb-2 mx-1">
+              <div className="flex items-center">
+                <h2
+                  className={clsx(
+                    `text-sm w-max px-1 rounded mr-2 text-gray-700 ${statusColor(
+                      todoStatus
+                    )}`
+                  )}
+                >
+                  {todoStatus}
+                </h2>
+                <p className="text-gray-400 text-sm">{item[todoStatus].length}</p>
+              </div>
+            </div>
+            <Droppable key={todoStatus} droppableId={todoStatus}>
+              {(provided) => (
+                <List ref={provided.innerRef} {...provided.droppableProps}>
                   {item[todoStatus as TodoStatus].map((carditem, index) => (
                     <Draggable
                       key={carditem.id}
@@ -66,7 +79,6 @@ export const KanbanList = ({ item, setKanban }: Prop) => {
                     >
                       {(provided) => (
                         <CardItem
-                          className="text-center shadow-md w-36 card bg-base-200"
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
@@ -81,11 +93,12 @@ export const KanbanList = ({ item, setKanban }: Prop) => {
                       )}
                     </Draggable>
                   ))}
-                </ul>
-                {provided.placeholder}
-              </List>
-            )}
-          </Droppable>
+
+                  {provided.placeholder}
+                </List>
+              )}
+            </Droppable>
+          </Section>
         ))}
       </ListWrap>
     </DragDropContext>
@@ -99,26 +112,25 @@ const ListWrap = styled.div`
   background: oklch(var(--b2));
   align-items: baseline;
 `;
-const List = styled.div`
+const Section = styled.section`
+  width: calc(100% / 3);
   display: flex;
-  align-items: center;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
   transition: all 0.1s;
-  gap: 20px;
-  ul {
-    min-width: 200px;
-    min-height: 200px;
-    align-items: center;
-    gap: 10px;
-    transition: all 0.1s;
-    padding: 10px 0;
-    display: flex;
-    flex-direction: column;
-  }
 `;
-const CardItem = styled.div`
+const List = styled.ul`
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+  width: 80%;
   transition: all 0.1s;
+  display: flex;
+  flex-direction: column;
+`;
+const CardItem = styled.li`
+  transition: all 0.1s;
+  width: 100%;
   position: relative;
   button {
     position: absolute;

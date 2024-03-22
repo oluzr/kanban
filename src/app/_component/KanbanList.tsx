@@ -127,7 +127,7 @@ const Section = styled.section`
   transition: all 0.1s;
 `;
 const List = styled.ul`
-  gap: 20px;
+  /* gap: 20px; */
   min-height: 50dvh;
   align-items: center;
   width: 80%;
@@ -139,6 +139,7 @@ const CardItem = styled.li`
   transition: all 0.1s;
   width: 100%;
   position: relative;
+  margin-bottom: 20px;
   button {
     z-index: 10;
     position: absolute;

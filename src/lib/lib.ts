@@ -7,8 +7,10 @@ export const statusColor = (status: string) => {
     case "todo":
       return "bg-red-100";
     case "doing":
-      return "bg-primary";
+      return "bg-lime-200";
     case "done":
-      return "bg-lime-500";
+      return "bg-base-300";
+    default:
+      return "bg-red-200";
   }
 };

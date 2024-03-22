@@ -3,9 +3,10 @@ import { TodoItem } from "@/types/types";
 import React from "react";
 import clsx from "clsx";
 import { statusColor } from "@/lib/lib";
+import styled from "styled-components";
 const Card = ({ item }: { item: TodoItem }) => {
   return (
-    <div className="p-2 rounded shadow-sm border-gray-100 border-2">
+    <CardItem>
       <h3 className="text-sm mb-3 text-gray-700">{item.title}</h3>
       <p
         className={clsx(
@@ -15,9 +16,17 @@ const Card = ({ item }: { item: TodoItem }) => {
       >
         {item.status}
       </p>
-
-    </div>
+    </CardItem>
   );
 };
 
 export default Card;
+
+const CardItem = styled.div`
+  border-radius: 10px;
+  padding: 15px;
+  background-color: #fff;
+  h3 {
+    width: calc(100% - 20px);
+  }
+`;

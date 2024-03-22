@@ -28,12 +28,12 @@ const AddCard = ({ setKanban }: Prop) => {
     <FormWrap onSubmit={handleSubmit}>
       <input
         onChange={(e) => setContent(e.target.value)}
-        className="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-darker"
+        className="input w-full"
         placeholder="Add Todo"
         value={content}
       />
-      <Button type="submit" btnClass="secondary">
-        Add
+      <Button type="submit" btnClass="primary">
+        add
       </Button>
     </FormWrap>
   );
@@ -42,10 +42,16 @@ export default AddCard;
 
 const FormWrap = styled.form`
   padding: 3% 5%;
+  height: 20dvh;
   background: oklch(var(--b2));
   display: flex;
   align-items: center;
   gap: 10px;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  
 `;
 const ShowBtn = styled.div`
   border: 1px dashed;

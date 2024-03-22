@@ -31,5 +31,7 @@ const Wrap = () => {
 export default Wrap;
 
 const Wrapper = styled.div`
-  height: 100%;
+  height: 100dvh;
+  background: oklch(var(--b2));
+  position: relative;
 `;

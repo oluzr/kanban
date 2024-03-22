@@ -21,7 +21,7 @@ const Button = ({ children, btnClass, type, onClick }: Prop) => {
     <button
       onClick={onClick}
       type={type ? type : "button"}
-      className={clsx("btn", `btn-${btnClass}`)}
+      className={clsx("btn", btnClass ? `btn-${btnClass}` : 'bg-gray-200')}
     >
       {children}
     </button>

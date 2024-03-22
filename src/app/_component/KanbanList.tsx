@@ -67,7 +67,6 @@ export const KanbanList = ({ item, setKanban }: Prop) => {
               </h2>
               <p className="text-gray-400 text-sm">{item[todoStatus].length}</p>
             </div>
-
             <Droppable key={todoStatus} droppableId={todoStatus}>
               {(provided) => (
                 <List ref={provided.innerRef} {...provided.droppableProps}>
@@ -99,7 +98,6 @@ export const KanbanList = ({ item, setKanban }: Prop) => {
                       )}
                     </Draggable>
                   ))}
-
                   {provided.placeholder}
                 </List>
               )}
@@ -127,7 +125,6 @@ const Section = styled.section`
   transition: all 0.1s;
 `;
 const List = styled.ul`
-  /* gap: 20px; */
   min-height: 50dvh;
   align-items: center;
   width: 80%;

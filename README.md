@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Kanban Board 🗂️
 
-## Getting Started
+![kanban](https://github.com/oluzr/kanban/assets/94340943/4cc3b364-8594-4657-9e5c-9e290534cc7a)
 
-First, run the development server:
+## drag and drop
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- `react-beautiful-dnd` 라이브러리 활용
+
+```javascript
+import {
+  DragDropContext,
+  Draggable,
+  Droppable,
+  DropResult,
+} from "react-beautiful-dnd";
+
+<DragDropContext onDragEnd={onDragEnd}>
+  ...
+  <Droppable key={todoStatus} droppableId={todoStatus}>
+    ...
+    <Draggable>
+      {(provided) => (
+        <CardItem
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+        >
+          <Card item={carditem} />
+        </CardItem>
+      )}
+    </Draggable>
+  </Droppable>
+</DragDropContext>;
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 키보드 동작 (접근:`tap` 선택:`space` 이동:`방향키`)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+![kanban key](https://github.com/oluzr/kanban/assets/94340943/e852f485-24cc-4f78-9c12-041947f1981b)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Styles
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- `CSS-in-JS`
+  - `Styled Components` 라이브러리 활용
+- `tailwindcss`, `daisyui` 활용

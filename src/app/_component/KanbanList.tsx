@@ -143,5 +143,8 @@ const CardItem = styled.li`
     top: 10px;
     right: 10px;
     padding: 4px;
+    svg{
+      color: #000;
+    }
   }
 `;

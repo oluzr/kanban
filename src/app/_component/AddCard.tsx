@@ -32,9 +32,7 @@ const AddCard = ({ setKanban }: Prop) => {
         placeholder="Add Todo"
         value={content}
       />
-      <Button type="submit">
-        add
-      </Button>
+      <Button type="submit">add</Button>
     </FormWrap>
   );
 };
@@ -51,7 +49,6 @@ const FormWrap = styled.form`
   width: 100%;
   bottom: 0;
   left: 0;
-  
 `;
 const ShowBtn = styled.div`
   border: 1px dashed;
